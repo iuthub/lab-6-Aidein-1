@@ -14,6 +14,14 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
 	$replacedText=preg_replace($pattern, $replaceText, $text);
 
+	$spacelessText = preg_replace("/\s/", '', $text);
+
+	$nonnumericlessText = preg_replace("/[a-z]|[!@#$%^&*()\$\s]/i", '', $text);
+
+	$newlineRemovedText = preg_replace('/[\r\n]+/', '', $text);
+
+	$extractedText = preg_replace('/((.*|\n)\[)|(\](.*|\n))/i', '', $text);
+
 	if(preg_match($pattern, $text)) {
 						$match="Match!";
 					} else {
@@ -37,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 			<dd><input type="text" name="pattern" value="<?= $pattern ?>"></dd>
 
 			<dt>Text</dt>
-			<dd><input type="text" name="text" value="<?= $text ?>"></dd>
+			<dd><textarea name="text"  cols="30" rows="10"></textarea></dd>
 
 			<dt>Replace Text</dt>
 			<dd><input type="text" name="replaceText" value="<?= $replaceText ?>"></dd>
@@ -47,6 +55,18 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
 			<dt>Replaced Text</dt>
 			<dd> <code><?=	$replacedText ?></code></dd>
+
+            <dt>Space Removed Text</dt>
+            <dd> <code><?=	$spacelessText ?></code></dd>
+
+            <dt>Nonumeric Removed Text</dt>
+            <dd> <code><?=	$nonnumericlessText ?></code></dd>
+
+            <dt>Newline Removed Text</dt>
+            <dd> <code><?=	$newlineRemovedText ?></code></dd>
+
+            <dt>Text inside [] brackets</dt>
+            <dd> <code><?=	$extractedText ?></code></dd>
 
 			<dt>&nbsp;</dt>
 			<dd><input type="submit" value="Check"></dd>
